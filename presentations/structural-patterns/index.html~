@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./src/styles/main.css">
+	<title>Creational Pattern</title>
+</head>
+
+<body>
+	<main role="main">
+		<article id="webslides">
+			<!-- Slide 1 -->
+			<section class="slide  ">
+				<div class="grid sm">
+					<div class="column bg-indigo-800 text-indigo-100">
+						<h1>Creational Patterns</h1>
+					</div>
+					<div class="column text-indigo-800 text-semibold bg-gray-400">
+						<h2 class="text-4xl">
+							Creational patterns handle how objects are created. The purpose of creational patterns is to isolate a
+							system
+							from having any knowledge of how objects are created. They enforce encapsulation and abstraction.
+						</h2>
+			</section>
+
+			<section class="slide bg-indigo-100">
+				<div class="wrap">
+					<h1 class="slide-top text-indigo-800">List of Creation Patterns</h1>
+					<ul class="flexblock specs">
+						<li>
+							<h2>Singleton</h2>
+						</li>
+						<li>
+							<h2>Factory Method</h2>
+						</li>
+						<li>
+							<h2>Abstract Factory</h2>
+						</li>
+						<li>
+							<h2>Prototype</h2>
+						</li>
+						<li>
+							<h2>Builder</h2>
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-indigo-800">
+							<h1>Singleton</h1>
+						</div>
+						<div class="column bg-indigo-800 text-indigo-100">
+							<p class="text-4xl">
+								This pattern restricts the creation of object for a class to a count of one. It is very simple and easy
+								to implement.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-indigo-800">
+					<h1 class="text-indigo-100">Eager Initialization</h1>
+					<pre><code class="java">
+public class DBConnection {    
+	//create the only private instance of the class
+	private static DBConnection instance = new DBConnection();    
+	
+	//prevents the class from getting instantiated
+	private DBConnection(){}
+
+	public static DBConnection getInstance(){
+		return instance;
+	}
+
+	public void executeAction(){
+		System.out.println("CRUD action execute successfully");
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-indigo-800">
+					<h1 class="text-indigo-100">Lazy Initialization</h1>
+					<pre><code class="java">
+public class LazyDBConnection {
+
+	//prevents the class from getting instantiated
+	private static volatile LazyDBConnection instance;   
+	private LazyDBConnection(){}
+
+	public static LazyDBConnection getInstance(){        
+		if (instance == null) {
+			instance = new LazyDBConnection();
+		}
+			
+		return instance;
+	}
+
+	public void executeAction(){
+		System.out.println("CRUD action execute successfully");
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-indigo-800">
+							<h1>Factory Method</h1>
+						</div>
+						<div class="column bg-indigo-800 text-indigo-100 content-center text-left">
+							<p class="text-4xl">
+								This pattern uses factory methods to deal with the problem of creating objects without specifying the
+								exact class of the object to be created.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap">
+					<h1 class="text-indigo-800">DB Connector</h1>
+					<pre><code class="java">
+interface ImageReader {
+    DecodedImage getDecodeImage();
+}
+
+class GifReader implements ImageReader {
+    private DecodedImage decodedImage;
+
+    public GifReader(String image) {
+        this.decodedImage = new DecodedImage(image);
+    }
+
+    @Override
+    public DecodedImage getDecodeImage() {
+        return decodedImage;
+    }
+}
+
+class JpegReader implements ImageReader {
+    private DecodedImage decodedImage;
+
+    public JpegReader(String image) {
+        decodedImage = new DecodedImage(image);
+    }
+
+    @Override
+    public DecodedImage getDecodeImage() {
+        return decodedImage;
+    }
+}
+
+public class FactoryMethodDemo {
+    public static void main(String[] args) {
+        DecodedImage decodedImage;
+        ImageReader reader = null;
+        String image = args[0];
+        String format = image.substring(image.indexOf('.') + 1, (image.length()));
+        if (format.equals("gif")) {
+            reader = new GifReader(image);
+        }
+        if (format.equals("jpeg")) {
+            reader = new JpegReader(image);
+        }
+        assert reader != null;
+        decodedImage = reader.getDecodeImage();
+        System.out.println(decodedImage);
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+		</article>
+	</main>
+	<script src="./src/scripts/index.js"></script>
+</body>
+
+</html>

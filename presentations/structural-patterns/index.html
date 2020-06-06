@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./src/styles/main.css">
+	<title>Structural Pattern</title>
+</head>
+
+<body>
+	<main role="main">
+		<article id="webslides" class="bg-gray-200">
+			<!-- Slide 1 -->
+			<section class="slide  ">
+				<div class="grid sm">
+					<div class="column bg-yellow-900 text-yellow-100">
+						<h1>Structural Patterns</h1>
+					</div>
+					<div class="column text-yellow-900 text-semibold bg-yellow-100">
+						<h2 class="text-4xl">
+							Structural Design Patterns are Design Patterns that ease the design by identifying a simple way to realize relationships between entities. 
+						</h2>
+			</section>
+
+			<section class="slide bg-gray-200">
+				<div class="wrap">
+					<h1 class="slide-top text-yellow-900">List of Structural Patterns</h1>
+					<ul class="flexblock specs">
+						<li>
+							<h2>Decorator</h2>
+						</li>
+						<li>
+							<h2>Flyweight</h2>
+						</li>
+						<li>
+							<h2>Facade</h2>
+						</li>
+						<li>
+							<h2>Adapter</h2>
+						</li>
+						<li>
+							<h2>Bridge</h2>
+						</li>
+						<li>
+							<h2>Proxy</h2>
+						</li>
+						<li>
+							<h2>Composite</h2>
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Decorator</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Adding additional functionality to an object dynamically, thus making any object extendable. 
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Currency Exchange</h1>
+					<pre><code class="java">
+public abstract class Currency {
+	String description = "Unknown currency";
+	
+	public String getCurrencyDescription() {
+		return description;
+	}
+	
+	public abstract double cost(double value);
+	
+}
+	
+	
+	// Concrete Component
+	
+public class Rupee extends Currency {
+	double value;
+	
+	public Rupee() {
+		description = "indian rupees";
+	}
+	
+	public double cost(double v){
+		value=v;
+		return value;
+	}
+	
+}
+	
+	//Another Concrete Component
+	
+public class Dollar extends Currency{
+	double value;
+	
+	public Dollar () {
+		description = "Dollar";
+	}
+	
+	public double cost(double v){
+	value=v;
+	
+		return value;
+	
+	}
+	
+}
+
+	
+	// Decorator
+	
+public abstract class Decorator extends Currency{
+	
+	public abstract String getDescription();
+	
+}
+	
+	
+	// Concrete Decorator
+	
+public class USDDecorator extends Decorator{
+	
+	Currency currency;
+	
+	
+	public USDDecorator(Currency currency){
+		this.currency = currency;
+	}
+	
+	
+	public String getDescription(){
+		return currency.getDescription()+" ,its US Dollar";
+	}
+	
+	
+}
+	
+	
+	
+	//Another Concrete Decorator
+	
+public class SGDDecorator extends Decorator{
+	Currency currency;
+	
+	public SGDDecorator(Currency currency){
+		this.currency = currency;
+	}
+	
+	
+	public String getDescription(){
+		return currency.getDescription()+" ,its singapore Dollar";
+	}
+	
+}
+
+	
+public class CurrencyCheck {
+	
+	public static void main(String[] args) {
+	
+		// without adding decorators
+	
+		Currency curr = new Dollar();
+	
+		System.out.println(curr.getDescription() +" dollar. "+curr.cost(2.0));
+	
+	
+	
+	
+	
+		//adding decorators
+	
+		Currency curr2 = new USDDecorator(new Dollar());
+	
+		System.out.println(curr2.getDescription() +" dollar. "+curr2.cost(4.0));
+	
+		Currency curr3 = new SGDDecorator(new Dollar());
+	
+		System.out.println(curr3.getDescription() +" dollar. "+curr3.cost(4.0));
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Flyweight</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Create light weight objects in large number by sharing data among the objects. 
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Paint Tool</h1>
+					<pre><code class="java">
+public interface Pen {   
+	public void setColor(String color);
+	public void draw(String content); 
+}
+
+public enum BrushSize {
+	THIN, MEDIUM, THICK
+}
+
+public class ThickPen implements Pen {
+
+	final BrushSize brushSize = BrushSize.THICK;    //intrinsic state - shareable
+	private String color = null;                    //extrinsic state - supplied by client
+		
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	@Override
+	public void draw(String content) {
+		System.out.println("Drawing THICK content in color : " + color);
+	}
+}
+
+public class ThinPen implements Pen {
+
+	final BrushSize brushSize = BrushSize.THIN;
+	private String color = null; 
+		
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	@Override
+	public void draw(String content) {
+		System.out.println("Drawing THIN content in color : " + color);
+	}
+}
+
+public class MediumPen implements Pen {
+
+	final BrushSize brushSize = BrushSize.MEDIUM;
+	private String color = null; 
+		
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	@Override
+	public void draw(String content) {
+		System.out.println("Drawing MEDIUM content in color : " + color);
+	}
+}
+
+public class PenFactory
+{
+    private static final HashMap<String, Pen> pensMap = new HashMap<>();
+ 
+    public static Pen getThickPen(String color) 
+    {
+        String key = color + "-THICK";
+         
+        Pen pen = pensMap.get(key);
+         
+        if(pen != null) {
+            return pen;
+        } else {
+            pen = new ThickPen();
+            pen.setColor(color);
+            pensMap.put(key, pen);
+        }
+         
+        return pen;
+    }
+     
+    public static Pen getThinPen(String color) 
+    {
+        String key = color + "-THIN";
+         
+        Pen pen = pensMap.get(key);
+         
+        if(pen != null) {
+            return pen;
+        } else {
+            pen = new ThinPen();
+            pen.setColor(color);
+            pensMap.put(key, pen);
+        }
+         
+        return pen;
+    }
+     
+    public static Pen getMediumPen(String color) 
+    {
+        String key = color + "-MEDIUM";
+         
+        Pen pen = pensMap.get(key);
+         
+        if(pen != null) {
+            return pen;
+        } else {
+            pen = new MediumPen();
+            pen.setColor(color);
+            pensMap.put(key, pen);
+        }
+         
+        return pen;
+    }
+}
+
+public class PaintBrushClient 
+{
+    public static void main(String[] args) 
+    {
+        Pen yellowThinPen1 = PenFactory.getThickPen("YELLOW");  //created new pen
+        yellowThinPen1.draw("Hello World !!");
+         
+        Pen yellowThinPen2 = PenFactory.getThickPen("YELLOW");  //pen is shared
+        yellowThinPen2.draw("Hello World !!");
+         
+        Pen blueThinPen = PenFactory.getThickPen("BLUE");       //created new pen
+        blueThinPen.draw("Hello World !!");
+         
+        System.out.println(yellowThinPen1.hashCode());
+        System.out.println(yellowThinPen2.hashCode());
+         
+        System.out.println(blueThinPen.hashCode());
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Facade</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Define a unified interface for a set of related interfaces, making them easy to use. 
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Report Editor</h1>
+					<pre><code class="java">
+public class Report {
+
+	private ReportHeader header;
+	private ReportData data;
+	private ReportFooter footer;
+		
+	public ReportHeader getHeader() {
+		return header;
+	}
+	public void setHeader(ReportHeader header) {
+		System.out.println("Setting report header");
+		this.header = header;
+	}
+	public ReportData getData() {
+		return data;
+	}
+	public void setData(ReportData data) {
+		System.out.println("Setting report data");
+		this.data = data;
+	}
+	public ReportFooter getFooter() {
+		return footer;
+	}
+	public void setFooter(ReportFooter footer) {
+		System.out.println("Setting report footer");
+		this.footer = footer;
+	}
+}
+
+public class ReportHeader {
+
+}
+
+public class ReportFooter {
+
+}
+
+public class ReportData {
+
+}
+
+public enum ReportType 
+{
+	PDF, HTML
+}
+
+public class ReportWriter {
+
+	public void writeHtmlReport(Report report, String location) {
+		System.out.println("HTML Report written");
+			
+		//implementation
+	}
+		
+	public void writePdfReport(Report report, String location) {
+		System.out.println("Pdf Report written");
+			
+		//implementation
+	}
+}
+
+public class ReportGeneratorFacade 
+{
+    public static void generateReport(ReportType type, DataSource dataSource, String location) 
+    {
+        if(type == null || dataSource == null) 
+        {
+            //throw some exception
+        }
+        //Create report
+        Report report = new Report();
+         
+        report.setHeader(new ReportHeader());
+        report.setFooter(new ReportFooter());
+         
+        //Get data from dataSource and set to ReportData object
+         
+        report.setData(new ReportData());
+         
+        //Write report
+        ReportWriter writer = new ReportWriter();
+        switch(type) 
+        {
+            case HTML:
+                writer.writeHtmlReport(report, location);
+                break;
+                 
+            case PDF:
+                writer.writePdfReport(report, location);
+                break;
+        }
+    }
+}
+
+public class Main 
+{
+    public static void main(String[] args) throws Exception
+    {
+        ReportGeneratorFacade reportGeneratorFacade = new ReportGeneratorFacade();
+         
+        reportGeneratorFacade.generateReport(ReportType.HTML, null, null);
+         
+        reportGeneratorFacade.generateReport(ReportType.PDF, null, null);
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Adapter</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Provide a way to convert the interface of a class to a different interface required by the client. 
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Signal Decoder</h1>
+					<pre><code class="java">
+public interface AnalogSignal {
+	float[] getAnalog();
+
+	void setAnalog(float[] analogData);
+
+	void printAnalog();
+}
+
+public interface DigitSignal {
+	byte[] getDigit();
+
+	void setDigit(byte[] digitData);
+
+	void printDigit();
+}
+
+public class FloatAnalogSignal implements AnalogSignal {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private float[] data;
+
+	public FloatAnalogSignal(float[] data) {
+		this.data = data;
+	}
+
+	@Override
+	public float[] getAnalog() {
+		return data;
+	}
+
+	@Override
+	public void setAnalog(float[] analogData) {
+		this.data = analogData;
+	}
+
+	@Override
+	public void printAnalog() {
+		logger.info("{}", Arrays.toString(getAnalog()));
+	}
+}
+
+public class BinDigitSignal implements DigitSignal {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private byte[] data;
+
+	public BinDigitSignal(byte[] data) {
+		this.data = data;
+	}
+
+	@Override
+	public byte[] getDigit() {
+		return data;
+	}
+
+	@Override
+	public void setDigit(byte[] digitData) {
+		this.data = digitData;
+	}
+
+	@Override
+	public void printDigit() {
+		logger.info("{}", Arrays.toString(getDigit()));
+	}
+}
+
+public class AnalogToDigitAdapter implements DigitSignal {
+	public static final float DEFAULT_THRESHOLD_FLOAT_TO_BIN = 1.0f; // default threshold,
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	private AnalogSignal analogSignal;
+	private byte[] digitData;
+	private float threshold;
+	private boolean cached;
+
+	public AnalogToDigitAdapter(AnalogSignal analogSignal) {
+		this(analogSignal, DEFAULT_THRESHOLD_FLOAT_TO_BIN);
+	}
+
+	public AnalogToDigitAdapter(AnalogSignal analogSignal, float threshold) {
+		this.analogSignal = analogSignal;
+		this.threshold = threshold;
+		this.cached = false;
+	}
+
+	@Override
+	public synchronized byte[] getDigit() {
+		if (!cached) {
+			float[] analogData = analogSignal.getAnalog();
+			int len = analogData.length;
+			digitData = new byte[len];
+
+			for (int i = 0; i < len; i++) {
+				digitData[i] = floatToByte(analogData[i]);
+			}
+		}
+
+		return digitData;
+	}
+
+	// not supported, should set the inner analog data instead,
+	@Override
+	public void setDigit(byte[] digitData) {
+		throw new UnsupportedOperationException();
+	}
+
+	public synchronized void setAnalogData(float[] analogData) {
+		invalidCache();
+		this.analogSignal.setAnalog(analogData);
+	}
+
+	public synchronized void invalidCache() {
+		cached = false;
+		digitData = null;
+	}
+
+	@Override
+	public void printDigit() {
+		logger.info("{}", Arrays.toString(getDigit()));
+	}
+
+	// float -> byte convert,
+	private byte floatToByte(float f) {
+		return (byte) (f >= threshold ? 1 : 0);
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Bridge</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Decouple an abstraction from it's interface allowing the two to vary independently.  
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Stack DS</h1>
+					<pre><code class="java">
+class Node {
+	public int value;
+	public Node prev, next;
+
+	public Node(int value) {
+		this.value = value;
+	}
+}
+
+class StackArray {
+	private int[] items;
+	private int size = -1;
+
+	public StackArray() {
+		this.items = new int[12];
+	}
+
+	public StackArray(int cells) {
+		this.items = new int[cells];
+	}
+
+	public void push(int i) {
+		if (!isFull()) {
+			items[++size] = i;
+		}
+	}
+
+	public boolean isEmpty() {
+		return size == -1;
+	}
+
+	public boolean isFull() {
+		return size == items.length - 1;
+	}
+
+	public int top() {
+		if (isEmpty()) {
+			return -1;
+		}
+		return items[size];
+	}
+
+	public int pop() {
+		if (isEmpty()) {
+			return -1;
+		}
+		return items[size--];
+	}
+}
+
+class StackList {
+	private Node last;
+	public void push(int i) {
+		if (last == null)
+			last = new Node(i);
+		else {
+			last.next = new Node(i);
+			last.next.prev = last;
+			last = last.next;
+		}
+	}
+	public boolean isEmpty() {
+		return last == null;
+	}
+	public boolean isFull() {
+		return false;
+	}
+	public int top() {
+		if (isEmpty()) {
+			return -1;
+		}
+		return last.value;
+	}
+	public int pop() {
+		if (isEmpty()) {
+			return -1;
+		}
+		int ret = last.value;
+		last = last.prev;
+		return ret;
+	}
+}
+
+class StackFIFO extends StackArray {
+	private StackArray stackArray = new StackArray();
+	public int pop() {
+		while (!isEmpty()) {
+			stackArray.push(super.pop());
+		}
+		int ret = stackArray.pop();
+		while (!stackArray.isEmpty()) {
+			push(stackArray.pop());
+		}
+		return ret;
+	}
+}
+
+class StackHanoi extends StackArray {
+	private int totalRejected = 0;
+	public int reportRejected() {
+		return totalRejected;
+	}
+	public void push(int in) {
+		if (!isEmpty() && in > top()) {
+			totalRejected++;
+		} else {
+			super.push(in);
+		}
+	}
+}
+
+public class BridgeDisc {
+	public static void main(String[] args) {
+		StackArray[] stacks = {new StackArray(), new StackFIFO(), new StackHanoi()};
+		StackList stackList = new StackList();
+		for (int i = 1, num; i < 15; i++) {
+			stacks[0].push(i);
+			stackList.push(i);
+			stacks[1].push(i);
+		}
+		Random rn = new Random();
+		for (int i = 1, num; i < 15; i++) {
+			stacks[2].push(rn.nextInt(20));
+		}
+		while (!stacks[0].isEmpty()) {
+			System.out.print(stacks[0].pop() + "  ");
+		}
+		System.out.println();
+		while (!stackList.isEmpty()) {
+			System.out.print(stackList.pop() + "  ");
+		}
+		System.out.println();
+		while (!stacks[1].isEmpty()) {
+			System.out.print(stacks[1].pop() + "  ");
+		}
+		System.out.println();
+		while (!stacks[2].isEmpty()) {
+			System.out.print(stacks[2].pop() + "  ");
+		}
+		System.out.println();
+		System.out.println("total rejected is "
+				+ ((StackHanoi) stacks[2]).reportRejected());
+	}
+}
+						
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Proxy</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Provide a placeholder for another object to control access to it. 
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Objects</h1>
+					<pre><code class="java">
+public interface RealObject{
+	public void doSomething();
+}
+
+public class RealObjectImpl implements RealObject {
+
+	@Override
+	public void doSomething() {
+		System.out.println("Performing work in real object");
+	}
+	
+}
+
+public class RealObjectProxy extends RealObjectImpl {
+    @Override
+    public void doSomething() 
+    {
+        //Perform additional logic and security
+        //Even we can block the operation execution
+        System.out.println("Delegating work on real object");
+        super.doSomething();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) 
+    {
+        RealObject proxy = new RealObjectProxy();
+        proxy.doSomething();
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-yellow-900 text-yellow-100">
+							<h1>Composite</h1>
+						</div>
+						<div class="column bg-yellow-100 text-yellow-900">
+							<p class="text-4xl">
+								Compose a set of objects in an heirarchy allowing clients to treat individual objects and collection of objects equally. 
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-yellow-900">
+					<h1 class="text-yellow-100">Account Management</h1>
+					<pre><code class="java">
+public abstract class Component 
+{
+	AccountStatement accStatement;
+	
+	protected List<Component> list = new ArrayList<>();
+	
+	public abstract float getBalance();
+	
+	public abstract AccountStatement getStatement();
+	
+	public void add(Component g) {
+		list.add(g);
+	}
+	
+	public void remove(Component g) {
+		list.remove(g);
+	}
+	
+	public Component getChild(int i) {
+		return (Component) list.get(i);
+	}
+}
+
+public class CompositeAccount extends Component 
+{
+    private float totalBalance;
+    private AccountStatement compositeStmt, individualStmt;
+ 
+    public float getBalance() {
+        totalBalance = 0;
+        for (Component f : list) {
+            totalBalance = totalBalance + f.getBalance();
+        }
+        return totalBalance;
+    }
+ 
+    public AccountStatement getStatement() {
+        for (Component f : list) {
+            individualStmt = f.getStatement();
+            compositeStmt.merge(individualStmt);
+        }
+        return compositeStmt;
+    }
+}
+
+
+public class AccountStatement 
+{
+    public void merge(AccountStatement g) 
+    {
+        //Use this function to merge all account statements
+    }
+}
+
+public class DepositAccount extends Component 
+{
+    private String accountNo;
+    private float accountBalance;
+     
+    private AccountStatement currentStmt;
+     
+    public DepositAccount(String accountNo, float accountBalance) {
+        super();
+        this.accountNo = accountNo;
+        this.accountBalance = accountBalance;
+    }
+ 
+    public String getAccountNo() {
+        return accountNo;
+    }
+ 
+    public float getBalance() {
+        return accountBalance;
+    }
+ 
+    public AccountStatement getStatement() {
+        return currentStmt;
+    }
+}
+
+public class SavingsAccount extends Component 
+{
+    private String accountNo;
+    private float accountBalance;
+     
+    private AccountStatement currentStmt;
+     
+    public SavingsAccount(String accountNo, float accountBalance) {
+        super();
+        this.accountNo = accountNo;
+        this.accountBalance = accountBalance;
+    }
+ 
+    public String getAccountNo() {
+        return accountNo;
+    }
+ 
+    public float getBalance() {
+        return accountBalance;
+    }
+ 
+    public AccountStatement getStatement() {
+        return currentStmt;
+    }
+}
+
+public class Client 
+{
+    public static void main(String[] args) 
+    {
+        // Creating a component tree
+        Component component = new CompositeAccount();
+ 
+        // Adding all accounts of a customer to component
+        component.add(new DepositAccount("DA001", 100));
+        component.add(new DepositAccount("DA002", 150));
+        component.add(new SavingsAccount("SA001", 200));
+ 
+        // getting composite balance for the customer
+        float totalBalance = component.getBalance();
+        System.out.println("Total Balance : " + totalBalance);
+         
+        AccountStatement mergedStatement = component.getStatement();
+        //System.out.println("Merged Statement : " + mergedStatement);
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+			
+		</article>
+	</main>
+	<script src="./src/scripts/index.js"></script>
+</body>
+
+</html>

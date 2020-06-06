@@ -1,0 +1,5 @@
+import * as ws from ',/webslides';
+import * as highlight from 'highlight.js';
+import * as typescript from 'highlight.js/lib/languages/typescript';
+
+import 'highlight.js/styles/github.css';

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./src/styles/main.css">
+	<title>SOLID Principles</title>
+    </head>
+    <body>
+	<main role="main">
+	    <article id="webslides">
+		<!-- Slide 1 -->
+		<section class="slide">
+		    <div class="grid sm">
+			<h1 class="column text-blue-700">
+			    <strong>SOLID</strong> Principles
+			</h1>
+			<div class="column bg-blue-700 text-blue-100">
+			    <h3>
+				&quot;Any fool can write code that a computer can understand. Good programmers write code that humans can understand.&quot;
+			    </h3>
+			    <h4 class="text-right">- Martin Fowler</h4>
+			</div>
+		    </div>
+		</section>
+
+		<!-- Slide 2 Abbreviation -->
+		<section class="slide">
+		    <div class="wrap grid sm">
+			<h1 class="column bg-blue-700 text-blue-100 text-center ">S</h1>
+			<h3 class="column ">Single Responsibility</h3>
+		    </div>
+		    <div class="wrap grid sm">
+			<h1 class="column bg-blue-700 text-blue-100 text-center ">O</h1>
+			<h3 class="column ">Open/Close</h3>
+		    </div>
+		    <div class="wrap grid sm">
+			<h1 class="column bg-blue-700 text-blue-100 text-center ">L</h1>
+			<h3 class="column ">Liskov Substitution</h3>
+		    </div>
+		    <div class="wrap grid sm">
+			<h1 class="column bg-blue-700 text-blue-100 text-center ">I</h1>
+			<h3 class="column ">Interface Segregation</h3>
+		    </div>
+		    <div class="wrap grid sm">
+			<h1 class="column bg-blue-700 text-blue-100 text-center ">D</h1>
+			<h3 class="column ">Dependency Inversion</h3>
+		    </div>
+		</section>
+
+		<!-- Slide 3 Single Responsibility -->
+		<section class="slide">
+		    <div class="wrap">
+			<div class="card-60 bg-blue-700 text-blue-100">
+			    <figure>
+				<img src="https://media.giphy.com/media/PHjiEBYrNPK6Y/giphy.gif" alt="There can be only one.">
+				<figcaption>
+				    Only one Responsibility for a class.
+				</figcaption>
+			    </figure>
+			    <!-- end figure-->
+			    <div class="flex-content">
+				<h2>
+				    Single Responsibility
+				</h2>
+				<p class="py-8 px-4">
+				    <strong>
+					A class must have only one Responsibility. It should do one thing and do that one thing really well.
+				    </strong>
+				</p>
+			    </div>
+			    <!-- end .flex-content-->
+			</div>
+			<!-- .end .card50 -->
+		    </div>
+		</section>
+		<!-- Slide 4 Single Responsibility Violation Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Single Responsibility Violation Example</h1>
+			<pre>
+			    <code class="ts">
+class User {
+    createPost(db: Database, message: string): void {
+        try {
+            db.add(message); // Primary Responsibility
+        } catch (err) {
+            //Logging to Multiple locations is another Responsibility.
+            db.logError(`An error has occured: ${err}`);
+            fs.writeFileSync('/local-errors.log', err);
+        }
+    }
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+		
+		<!-- Slide 5 Single Responsibility Correction Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Single Responsibility Correction Example</h1>
+			<pre>
+			    <code class="ts">
+class User {
+    private logger: ErrorLogger = new ErrorLogger();
+    createPost(db: Database, message: string) {
+        try {
+            db.add(message); // Primary Responsibility
+        } catch (err) {
+            this.logger.log(err); // Secondary Responsibility
+        }
+    }
+}
+
+class ErrorLogger {
+    // Logging to multiple locations is the primary responsibility
+    log(err: Error): void {
+        db.logError(`An error has occured: ${err}`);
+        fs.writeFileSync('/local-errors.log', err);
+    }
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+
+
+		<!-- Slide 6 Open/Close -->
+		<section class="slide">
+		    <div class="wrap">
+			<div class="card-60 bg-blue-700 text-blue-100">
+			    <figure>
+				<img src="https://media.giphy.com/media/3o7TKM4MuCYk6JFu36/giphy.gif" alt="There can be only one.">
+				<figcaption>
+				    Open for extension, Closed for modification.
+				</figcaption>
+			    </figure>
+			    <!-- end figure-->
+			    <div class="flex-content">
+				<h2>
+				    Open/Close
+				</h2>
+				<p class="py-8 px-4">
+				    <strong>
+					A class must be open for extension and closed for modifications. The code should provide ways to add new features by extending the existing code rather than modifying it.
+				    </strong>
+				</p>
+			    </div>
+			    <!-- end .flex-content-->
+			</div>
+			<!-- .end .card50 -->
+		    </div>
+		</section>
+		<!-- Slide 7 Open/Close Violation Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Open/Close Violation Example</h1>
+			<pre>
+			    <code class="ts">
+class Post {
+    createPost(db: Database, message: string): void {
+       // Hard coding invites modification when adding new post type or changing character
+       if (message[0] === '#') {
+            db.addAsTag(message);
+        } else {
+            db.add(message);
+        }
+    }
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+		<!-- Slide 8 Open/Close Correction Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Open/Close Correction Example</h1>
+			<pre>
+			    <code class="ts">
+class Post {
+    createPost(db: Database, message: string): void {
+        db.add(message);
+    }
+
+}
+
+//Extends without any need for modification
+class TagPost extends Post {
+    createPost(db: Database, message: string): void {
+        db.addAsTag(message);
+    }
+
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+
+		<!-- Slide 9 Liskov Substitution -->
+		<section class="slide">
+		    <div class="wrap">
+			<div class="card-60 bg-blue-700 text-blue-100">
+			    <figure>
+				<img src="https://media.giphy.com/media/2xEC1SQQgW5CxLOxMr/giphy.gif" alt="There can be only one.">
+				<figcaption>
+				    Child compatible with parent.
+				</figcaption>
+			    </figure>
+			    <!-- end figure-->
+			    <div class="flex-content">
+				<h2>
+				    Liskov Substitution
+				</h2>
+				<p class="py-8 px-4">
+				    <strong>
+					An object of child class type must be substitutable with an object of parent class type. The interface and behaviour of child class must be compatible with that of the parent's.
+				    </strong>
+				</p>
+			    </div>
+			    <!-- end .flex-content-->
+			</div>
+			<!-- .end .card50 -->
+		    </div>
+		</section>
+		<!-- Slide 10 Liskov Substitution Correction Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Liskov Substitution Violation Example</h1>
+			<pre>
+			    <code class="ts">
+class Post {
+    createPost(db: Database, message: AppString): void {
+        db.add(message);
+    }
+
+}
+
+
+class TagPost extends Post {
+    createPost(db: Database, message: AppString): void {
+        db.addAsTag(message);
+    }
+
+}
+
+class MentionPost extends Post {
+    // Add new method Interface rather that reusing existing.
+    createMentionPost(db: Database, message: AppString): void {
+        let user: string = message.parseUser();
+
+        db.notifyUser(user);
+        db.overrideExistingMention(user, message);
+        this.createPost(db, message);
+    }
+
+}
+
+class PostHandler {
+    private db: Database = new Database();
+
+    handleNewPosts(): void {
+        let newMessages: AppString[] = this.db.getQueuesMessages();
+
+        newMessages.forEach((message: AppString) => {
+            let post: Post;
+
+            if (message.StartsWith("#")) {
+                post = new TagPost();
+            }
+            else if (message.StartsWith("@")) {
+                post = new MentionPost();
+            }
+            else {
+                post = new Post();
+            }
+            // if post type is MentionPost, then createPost of Post class (Parent) is called.
+            post.createPost(this.db, message);
+        });
+    }
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+		<!-- Slide 11 Liskov Substitution Correction Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Liskov Substitution Correction Example</h1>
+			<pre>
+			    <code class="ts">
+class Post {
+    createPost(db: Database, message: AppString): void {
+        db.add(message);
+    }
+
+}
+
+
+class TagPost extends Post {
+    createPost(db: Database, message: AppString): void {
+        db.addAsTag(message);
+    }
+
+}
+
+class MentionPost extends Post {
+    // Reuse the Interface provided by parent.
+    createPost(db: Database, message: AppString): void {
+        let user: string = message.parseUser();
+
+        db.notifyUser(user);
+        db.overrideExistingMention(user, message);
+        super.createPost(db, message);
+    }
+
+}
+
+class PostHandler {
+    private db: Database = new Database();
+
+    handleNewPosts(): void {
+        let newMessages: AppString[] = this.db.getQueuesMessages();
+
+        newMessages.forEach((message: AppString) => {
+            let post: Post;
+
+            if (message.StartsWith("#")) {
+                post = new TagPost();
+            }
+            else if (message.StartsWith("@")) {
+                post = new MentionPost();
+            }
+            else {
+                post = new Post();
+            }
+
+            post.createPost(this.db, message);
+        });
+    }
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+
+		<!-- Slide 12 Interface Segregation -->
+		<section clas=s"slide">
+		    <div class="wrap">
+			<div class="card-60 bg-blue-700 text-blue-100">
+			    <figure>
+				<img src="https://media.giphy.com/media/3og0Ivispl1Xs5NCVi/giphy.gif" alt="There can be only one.">
+				<figcaption>
+				    Child compatible with parent.
+				</figcaption>
+			    </figure>
+			    <!-- end figure-->
+			    <div class="flex-content">
+				<h2>
+				    Interface Segregation
+				</h2>
+				<p class="py-8 px-4">
+				    <strong>
+					An interface should not add new functionality by add new behaviours. Instead new interface should be created or extended. Dependants must not be forced to implement behaviours they don't use/need.
+				    </strong>
+				</p>
+			    </div>
+			    <!-- end .flex-content-->
+			</div>
+			<!-- .end .card50 -->
+		    </div>
+		</section>
+		<!-- Slide 13 Interface Segregation Violation Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Interface Segregation Violation Example</h1>
+			<pre>
+			    <code class="ts">
+interface PostBuilder {
+    createPost(db: Database, message: AppString): void;
+    readPost(db: Database, postId: UUID): Post; //Builder need not read a post.
+}
+			    </code>
+			</pre>
+			<p>Violates Single Responsibility when implemented.</p>
+
+		    </div>
+		</section>
+		<!-- Slide 14 Interface Segregation Correction Example -->
+		<section class="slide">
+		    <div class="wrap bg-blue">
+			<h1>Interface Segregation Correction Example</h1>
+			<pre>
+			    <code class="ts">
+interface PostBuilder {
+    createPost(db: Database, message: AppString): void;
+}
+
+interface PostReader {
+    readPost(db: Database, postId: UUID): Post;
+}
+			    </code>
+			</pre>
+		    </div>
+		</section>
+	    </article>
+	</main>
+	<script src="./src/scripts/index.js"></script>
+    </body>
+</html>

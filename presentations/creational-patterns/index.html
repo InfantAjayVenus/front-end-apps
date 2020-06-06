@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./src/styles/main.css">
+	<title>Creational Pattern</title>
+</head>
+
+<body>
+	<main role="main">
+		<article id="webslides">
+			<!-- Slide 1 -->
+			<section class="slide  ">
+				<div class="grid sm">
+					<div class="column bg-indigo-800 text-indigo-100">
+						<h1>Creational Patterns</h1>
+					</div>
+					<div class="column text-indigo-800 text-semibold bg-gray-400">
+						<h2 class="text-4xl">
+							Creational patterns handle how objects are created. The purpose of creational patterns is to isolate a
+							system
+							from having any knowledge of how objects are created. They enforce encapsulation and abstraction.
+						</h2>
+			</section>
+
+			<section class="slide bg-indigo-100">
+				<div class="wrap">
+					<h1 class="slide-top text-indigo-800">List of Creation Patterns</h1>
+					<ul class="flexblock specs">
+						<li>
+							<h2>Singleton</h2>
+						</li>
+						<li>
+							<h2>Factory Method</h2>
+						</li>
+						<li>
+							<h2>Abstract Factory</h2>
+						</li>
+						<li>
+							<h2>Prototype</h2>
+						</li>
+						<li>
+							<h2>Builder</h2>
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-indigo-800">
+							<h1>Singleton</h1>
+						</div>
+						<div class="column bg-indigo-800 text-indigo-100">
+							<p class="text-4xl">
+								This pattern restricts the creation of object for a class to a count of one. It is very simple and easy
+								to implement.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-indigo-800">
+					<h1 class="text-indigo-100">Eager Initialization</h1>
+					<pre><code class="java">
+public class DBConnection {    
+	//create the only private instance of the class
+	private static DBConnection instance = new DBConnection();    
+	
+	//prevents the class from getting instantiated
+	private DBConnection(){}
+
+	public static DBConnection getInstance(){
+		return instance;
+	}
+
+	public void executeAction(){
+		System.out.println("CRUD action execute successfully");
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-indigo-800">
+					<h1 class="text-indigo-100">Lazy Initialization</h1>
+					<pre><code class="java">
+public class LazyDBConnection {
+
+	//prevents the class from getting instantiated
+	private static volatile LazyDBConnection instance;   
+	private LazyDBConnection(){}
+
+	public static LazyDBConnection getInstance(){        
+		if (instance == null) {
+			instance = new LazyDBConnection();
+		}
+			
+		return instance;
+	}
+
+	public void executeAction(){
+		System.out.println("CRUD action execute successfully");
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-indigo-800">
+							<h1>Factory Method</h1>
+						</div>
+						<div class="column bg-indigo-800 text-indigo-100 content-center text-left">
+							<p class="text-4xl">
+								This pattern uses factory methods to deal with the problem of creating objects without specifying the
+								exact class of the object to be created.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-indigo-800 ">
+					<h1 class="text-indigo-100">Image Decoder</h1>
+					<pre><code class="java">
+interface ImageReader {
+    DecodedImage getDecodeImage();
+}
+
+class GifReader implements ImageReader {
+    private DecodedImage decodedImage;
+
+    public GifReader(String image) {
+        this.decodedImage = new DecodedImage(image);
+    }
+
+    @Override
+    public DecodedImage getDecodeImage() {
+        return decodedImage;
+    }
+}
+
+class JpegReader implements ImageReader {
+    private DecodedImage decodedImage;
+
+    public JpegReader(String image) {
+        decodedImage = new DecodedImage(image);
+    }
+
+    @Override
+    public DecodedImage getDecodeImage() {
+        return decodedImage;
+    }
+}
+
+public class FactoryMethodDemo {
+    public static void main(String[] args) {
+        DecodedImage decodedImage;
+        ImageReader reader = null;
+        String image = args[0];
+        String format = image.substring(image.indexOf('.') + 1, (image.length()));
+        if (format.equals("gif")) {
+            reader = new GifReader(image);
+        }
+        if (format.equals("jpeg")) {
+            reader = new JpegReader(image);
+        }
+        assert reader != null;
+        decodedImage = reader.getDecodeImage();
+        System.out.println(decodedImage);
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+			<section class="slide">
+			    <div class="wrap">
+				<div class="grid sm">
+				    <div class="column text-indigo-800 bg-gray-400">
+					<h1>Abstract Factory Method</h1>
+				    </div>
+				    <div class="column bg-indigo-800 text-indigo-100">
+					<p class="text-4xl">
+					    This Pattern provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
+					</p>
+				    </div>
+				</div>
+			    </div>
+			</section>
+			<section class="slide">
+			    <div class="wrap bg-indigo-800">
+				<h1 class="text-indigo-100">GUI Builder</h1>
+				<pre>
+				    <code class="java">
+public class Main{
+
+	public static void main(String[] args){
+	
+		AbstractWidgetFactory widgetFactory = null;
+	
+		//check what platform we're on
+	
+		if(Platform.currentPlatform()=="MACOSX"){
+	
+		widgetFactory  = new MacOSXWidgetFactory();
+	
+		} else {
+	
+		widgetFactory  = new MsWindowsWidgetFactory();
+	
+		} 
+	}
+	
+}
+
+
+public interface AbstractWidgetFactory{
+
+	public Window createWindow();
+	
+}
+
+public class MsWindowsWidgetFactory{
+
+	//create an MSWindow
+	
+	public Window createWindow(){
+	
+		MSWindow window = new MSWindow();
+	
+		return window;
+	
+	}
+	
+}
+
+public class MacOSXWidgetFactory{
+
+	//create a MacOSXWindow
+	
+	public Window createWindow(){
+	
+		MacOSXWindow window = new MacOSXWindow();
+	
+		return window;
+	
+	}
+	
+}
+
+public interface Window{
+
+	public void setTitle(String text);
+	
+	public void repaint();
+	
+}
+
+public class MSWindow implements Window{
+
+	public void setTitle(){
+	
+		//MS Windows specific behaviour
+	
+	}
+	
+	public void repaint(){
+	
+		//MS Windows specific behaviour
+	
+	}
+	
+}
+
+public class MacOSXWindow implements Window{
+
+	public void setTitle(){
+	
+		//Mac OSX specific behaviour
+	
+	}
+	
+	public void repaint(){
+	
+		//Mac OSX specific behaviour
+	
+	}
+	
+}
+					</code>
+				</pre>
+			    </div>
+			</section>
+			<section class="slide">
+			    <div class="wrap">
+				<div class="grid sm">
+				    <div class="column bg-gray-400 text-indigo-800">
+					<h1>Prototype</h1>
+				    </div>
+				    <div class="column bg-indigo-800 text-indigo-100">
+					<p class="text-4xl">
+					    This pattern is used when the creation of new objects is done by cloning an existing instance.
+					</p>
+				    </div>
+				</div>
+			    </div>
+			</section>
+			<section class="slide">
+			    <div class="wrap bg-indigo-800">
+				<h1 class="text-indigo-100">Employee Record</h1>
+				<pre>
+				    <code class="java">
+
+public class Employees implements Cloneable{
+
+	private List<String> empList;
+					
+	public Employees(){
+		empList = new ArrayList<String>();
+	}
+					
+	public Employees(List<String> list){
+		this.empList=list;
+	}
+	public void loadData(){
+	//read all employees from database and put into the list
+		empList.add("Pankaj");
+		empList.add("Raj");
+		empList.add("David");
+		empList.add("Lisa");
+	}
+				
+	public List<String> getEmpList() {
+		return empList;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException{
+		List<String> temp = new ArrayList<String>();
+		for(String s : this.getEmpList()){
+			temp.add(s);
+		}
+		return new Employees(temp);
+	}
+				
+}
+
+public class PrototypePatternTest {
+
+	public static void main(String[] args) throws CloneNotSupportedException {
+		Employees emps = new Employees();
+		emps.loadData();
+					
+		//Use the clone method to get the Employee object
+		Employees empsNew = (Employees) emps.clone();
+		Employees empsNew1 = (Employees) emps.clone();
+		List<String> list = empsNew.getEmpList();
+		list.add("John");
+		List<String> list1 = empsNew1.getEmpList();
+		list1.remove("Pankaj");
+					
+		System.out.println("emps List: "+emps.getEmpList());
+		System.out.println("empsNew List: "+list);
+		System.out.println("empsNew1 List: "+list1);
+	}
+
+}
+				    </code>
+				</pre>
+			    </div>
+			</section>
+			<section class="slide">
+			    <div class="wrap">
+				<div class="grid sm">
+				    <div class="column bg-gray-400">
+					<h1 class="text-indigo-800">Builder</h1>
+				    </div>
+				    <div class="column bg-indigo-800 text-indigo-100">
+					<p class="text-4xl">
+					    This pattern is used to separate the construction of a complex object from its representation.
+					</p>
+				    </div>
+				</div>
+			    </div>
+			</section>
+			
+			<section class="slide">
+			    <div class="wrap bg-indigo-800">
+				<h1 class="text-indigo-100">Task Management App</h1>
+				<pre>
+				    <code class="java">
+// Representation of Task
+public class Task {
+	private final long id;
+	private String summary = "";
+	private String description = "";
+	private boolean done = false;
+	private Date dueDate;
+
+	public Task(long id) {
+		this.id = id;
+	}
+
+	public Task(long id, String summary, String description, boolean done,
+			Date dueDate) {
+		this.id = id;
+		this.summary = summary;
+		this.description = description;
+		this.done = done;
+		this.dueDate = dueDate;
+
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
+	public Date getDueDate() {
+		return new Date(dueDate.getTime());
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = new Date(dueDate.getTime());
+	}
+}
+
+//Construction of Task
+public class TaskBuilder {
+
+    private final long id;
+    private String summary = "";
+    private String description = "";
+    private boolean done = false;
+    private Date dueDate;
+
+    public TaskBuilder(long id, String summary, String description, boolean done,
+            Date dueDate) {
+        this.id = id;
+        this.summary = summary;
+        this.description = description;
+        this.done = done;
+        this.dueDate = dueDate;
+    }
+
+    public TaskBuilder setSummary(String summary) {
+        this.summary = summary;
+        return this;
+    }
+
+    public TaskBuilder setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public TaskBuilder setDone(boolean done) {
+        this.done = done;
+        return this;
+    }
+
+    public TaskBuilder setDueDate(Date dueDate) {
+        this.dueDate = new Date(dueDate.getTime());
+        return this;
+    }
+    public Task build() {
+        return new Task(id,summary, description,done, dueDate);
+    }
+}
+
+public class MainTest {
+
+    public static void main(String[] args) {
+        Task task = new TaskBuilder(5).setDescription("Hello").setSummary("Test").build();
+        System.out.println(task);
+    }
+
+}
+					</code>
+				</pre>
+			    </div>
+			</section>
+			
+		</article>
+	</main>
+	<script src="./src/scripts/index.js"></script>
+</body>
+
+</html>

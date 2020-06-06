@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./src/styles/main.css">
+	<title>Behavioural Pattern</title>
+</head>
+
+<body>
+	<main role="main">
+		<article id="webslides">
+			<section class="slide  ">
+				<div class="grid sm">
+					<div class="column bg-teal-800 text-teal-100">
+						<h1>Behavioural Patterns</h1>
+					</div>
+					<div class="column text-teal-800 text-semibold bg-gray-400">
+						<h2 class="text-4xl">
+							Behavioral patterns handle how objects interact. That interaction involves communication
+							with one another, dependencies on one another, isolation from each other to be flexible,
+							maintainable and testable.
+						</h2>
+			</section>
+
+			<section class="slide bg-teal-100">
+				<div class="wrap">
+					<h1 class="slide-top text-teal-800">List of Behavioural Patterns</h1>
+					<ul class="flexblock specs">
+						<li>
+							<h2>Observer</h2>
+						</li>
+						<li>
+							<h2>Iterator</h2>
+						</li>
+						<li>
+							<h2>Chain of Responsibility</h2>
+						</li>
+						<li>
+							<h2>Strategy</h2>
+						</li>
+						<li>
+							<h2>Mediator</h2>
+						</li>
+						<li>
+							<h2>Template Method</h2>
+						</li>
+						<li>
+							<h2>State</h2>
+						</li>
+						<li>
+							<h2>Memento</h2>
+						</li>
+						<li>
+							<h2>Visitor</h2>
+						</li>
+						<li>
+							<h2>Command</h2>
+						</li>
+						<li>
+							<h2>Interpreter</h2>
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Observer</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Define a one-to-many relationship between objects, so that when one object changes, it
+								notifies to all it's dependencies.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Implementation</h1>
+					<pre><code class="java">
+public interface Subject 
+{
+	public void attach(Observer o);
+	public void detach(Observer o);
+	public void notifyUpdate(Message m);
+}
+
+public class MessagePublisher implements Subject {
+
+	private List<Observer> observers = new ArrayList<>();
+	
+	@Override
+	public void attach(Observer o) {
+		observers.add(o);
+	}
+	
+	@Override
+	public void detach(Observer o) {
+		observers.remove(o);
+	}
+	
+	@Override
+	public void notifyUpdate(Message m) {
+		for(Observer o: observers) {
+			o.update(m);
+		}
+	}
+}
+
+public interface Observer 
+{
+	public void update(Message m);
+}
+
+public class MessageSubscriberOne implements Observer 
+{
+	@Override
+	public void update(Message m) {
+		System.out.println("MessageSubscriberOne :: " + m.getMessageContent());
+	}
+}
+
+public class Message 
+{
+	final String messageContent;
+		
+	public Message (String m) {
+		this.messageContent = m;
+	}
+	
+	public String getMessageContent() {
+		return messageContent;
+	}
+}
+
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		MessageSubscriberOne s1 = new MessageSubscriberOne();
+		MessageSubscriberTwo s2 = new MessageSubscriberTwo();
+		MessageSubscriberThree s3 = new MessageSubscriberThree();
+			
+		MessagePublisher p = new MessagePublisher();
+			
+		p.attach(s1);
+		p.attach(s2);
+			
+		p.notifyUpdate(new Message("First Message"));   //s1 and s2 will receive the update
+			
+		p.detach(s1);
+		p.attach(s3);
+			
+		p.notifyUpdate(new Message("Second Message")); //s2 and s3 will receive the update
+	}
+}	
+					</code></pre>
+				</div>
+			</section>
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Iterator</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Provide an interface to access the elements of an aggregate object sequentially, without
+								exposing the object's implementation.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Topic List Manager</h1>
+					<pre><code class="java">
+public class Topic 
+{
+	private String name;
+		
+	public Topic(String name) {
+		super();
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+
+public interface Iterator<E> 
+{
+	void reset();   // reset to the first element
+	
+	E next();   // To get the next element
+	
+	E currentItem();    // To retrieve the current element
+	
+	boolean hasNext();  // To check whether there is any next element or not.
+}
+
+public class TopicIterator implements Iterator<Topic> {
+
+	private Topic[] topics;
+	private int position;
+		
+	public TopicIterator(Topic[] topics)
+	{
+		this.topics = topics;
+		position = 0;
+	}
+	
+	@Override
+	public void reset() {
+		position = 0;
+	}
+	
+	@Override
+	public Topic next() { 
+		return topics[position++];
+	}
+	
+	@Override
+	public Topic currentItem() {
+		return topics[position];
+	}
+	
+	@Override
+	public boolean hasNext() {
+		if(position >= topics.length)
+			return false;
+		return true;
+	}
+}
+
+public interface List<E>
+{
+	Iterator<E> iterator();
+}
+
+public class TopicList implements List<Topic>
+{
+	private Topic[] topics;
+		
+	public TopicList(Topic[] topics)
+	{
+		this.topics = topics;
+	}
+		
+	@Override
+	public Iterator<Topic> iterator() {
+		return new TopicIterator(topics);
+	}
+}
+
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        Topic[] topics = new Topic[5];
+        topics[0] = new Topic("topic1");
+        topics[1] = new Topic("topic2");
+        topics[2] = new Topic("topic3");
+        topics[3] = new Topic("topic4");
+        topics[4] = new Topic("topic5");
+         
+        List<Topic> list = new TopicList(topics);
+         
+        Iterator<Topic> iterator = list.iterator();
+         
+        while(iterator.hasNext()) {
+            Topic currentTopic = iterator.next();
+            System.out.println(currentTopic.getName());
+        }
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Chain of Responsibility</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Chain the recieving objects and pass the request along the chain until an object handles
+								it.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Implementation Sample</h1>
+					<pre><code class="java">
+public class Request {	
+	private int m_value;
+	private String m_description;
+
+	public Request(String description, int value)
+	{
+		m_description = description;
+		m_value = value;
+	}
+
+	public int getValue()
+	{
+		return m_value;
+	}
+
+	public String getDescription()
+	{
+		return m_description;
+	}          
+}
+
+public abstract class Handler
+{
+	protected Handler m_successor;
+	public void setSuccessor(Handler successor)
+	{
+		m_successor = successor;
+	}
+
+	public abstract void handleRequest(Request request);
+}
+
+public class ConcreteHandlerOne extends Handler
+{
+	public void handleRequest(Request request)
+	{
+		if (request.getValue() < 0)
+		{           //if request is eligible handle it
+			System.out.println("Negative values are handled by ConcreteHandlerOne:");
+			System.out.println("\tConcreteHandlerOne.HandleRequest : " + request.getDescription()
+							+ request.getValue());
+		}
+		else
+		{
+			super.handleRequest(request);
+		}
+	}
+	}
+
+public class ConcreteHandlerThree extends Handler
+{
+	public void handleRequest(Request request)
+	{
+		if (request.getValue() >= 0)
+		{           //if request is eligible handle it
+			System.out.println("Zero values are handled by ConcreteHandlerThree:");
+			System.out.println("\tConcreteHandlerThree.HandleRequest : " + request.getDescription()
+							+ request.getValue());
+		}
+		else
+		{
+			super.handleRequest(request);
+		}
+	}
+}
+
+public class ConcreteHandlerTwo extends Handler
+{
+	public void handleRequest(Request request)
+	{
+		if (request.getValue() > 0)
+		{           //if request is eligible handle it
+			System.out.println("Positive values are handled by ConcreteHandlerTwo:");
+			System.out.println("\tConcreteHandlerTwo.HandleRequest : " + request.getDescription()
+							+ request.getValue());
+		}
+		else
+		{
+			super.handleRequest(request);
+		}
+	}
+}
+
+public class Main 
+{
+	public static void main(String[] args) 
+	{
+		// Setup Chain of Responsibility
+		Handler h1 = new ConcreteHandlerOne();
+		Handler h2 = new ConcreteHandlerTwo();
+		Handler h3 = new ConcreteHandlerThree();
+		h1.setSuccessor(h2);
+		h2.setSuccessor(h3);
+
+		// Send requests to the chain
+		h1.handleRequest(new Request("Negative Value ", -1));
+		h1.handleRequest(new Request("Negative Value ",  0));
+		h1.handleRequest(new Request("Negative Value ",  1));
+		h1.handleRequest(new Request("Negative Value ",  2));
+		h1.handleRequest(new Request("Negative Value ", -5));	    
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Strategy</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Create a family of algorithms and make them interchangable by encapsulating them.
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Payment Gateways</h1>
+					<pre><code class="java">
+public interface PaymentStrategy {
+
+	public void pay(int amount);
+}
+public class CreditCardStrategy implements PaymentStrategy {
+
+	private String name;
+	private String cardNumber;
+	private String cvv;
+	private String dateOfExpiry;
+	
+	public CreditCardStrategy(String nm, String ccNum, String cvv, String expiryDate){
+		this.name=nm;
+		this.cardNumber=ccNum;
+		this.cvv=cvv;
+		this.dateOfExpiry=expiryDate;
+	}
+	@Override
+	public void pay(int amount) {
+		System.out.println(amount +" paid with credit/debit card");
+	}
+
+}
+
+public class PaypalStrategy implements PaymentStrategy {
+
+	private String emailId;
+	private String password;
+	
+	public PaypalStrategy(String email, String pwd){
+		this.emailId=email;
+		this.password=pwd;
+	}
+	
+	@Override
+	public void pay(int amount) {
+		System.out.println(amount + " paid using Paypal.");
+	}
+
+}
+
+public class ShoppingCartTest {
+
+	public static void main(String[] args) {
+		ShoppingCart cart = new ShoppingCart();
+		
+		Item item1 = new Item("1234",10);
+		Item item2 = new Item("5678",40);
+		
+		cart.addItem(item1);
+		cart.addItem(item2);
+		
+		//pay by paypal
+		cart.pay(new PaypalStrategy("myemail@example.com", "mypwd"));
+		
+		//pay by credit card
+		cart.pay(new CreditCardStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+	}
+
+}						
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Mediator</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Define an Object that encapsulates a set of object thus keeping them from referring to
+								each other explicitly and vary the interaction independently. </p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Chat Room App</h1>
+					<pre><code class="java">
+public interface IChatRoom 
+{
+	public void sendMessage(String msg, String userId);
+	
+	void addUser(User user);
+}
+
+public class ChatRoom implements IChatRoom {
+
+	private Map<String, User> usersMap = new HashMap<>();
+	
+	@Override
+	public void sendMessage(String msg, String userId) 
+	{
+		User u = usersMap.get(userId);
+		u.receive(msg);
+	}
+	
+	@Override
+	public void addUser(User user) {
+		this.usersMap.put(user.getId(), user);
+	}
+}
+
+public abstract class User
+{
+    private IChatRoom mediator;
+     
+    private String id;
+    private String name;
+     
+    public User(IChatRoom room, String id, String name){
+        this.mediator = room;
+        this.name = name;
+        this.id = id;
+    }
+     
+    public abstract void send(String msg, String userId);
+    public abstract void receive(String msg);
+ 
+    public IChatRoom getMediator() {
+        return mediator;
+    }
+ 
+    public String getId() {
+        return id;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+}
+
+public class ChatUser extends User {
+     
+    public ChatUser(IChatRoom room, String id, String name) {
+        super(room, id, name);
+    }
+ 
+    @Override
+    public void send(String msg, String userId) {
+        System.out.println(this.getName() + " :: Sending Message : " + msg);
+        getMediator().sendMessage(msg, userId);
+    }
+ 
+    @Override
+    public void receive(String msg) {
+        System.out.println(this.getName() + " :: Received Message : " + msg);
+    }
+ 
+}
+
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        IChatRoom chatroom = new ChatRoom();
+         
+        User user1 = new ChatUser(chatroom,"1", "Alex");
+        User user2 = new ChatUser(chatroom,"2", "Brian");
+        User user3 = new ChatUser(chatroom,"3", "Charles");
+        User user4 = new ChatUser(chatroom,"4", "David");
+         
+        chatroom.addUser(user1);
+        chatroom.addUser(user2);
+        chatroom.addUser(user3);
+        chatroom.addUser(user4);
+ 
+        user1.send("Hello brian", "2");
+        user2.send("Hey buddy", "1");
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Template Method</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Define the steps of an algorithm/operation and allow subclasses define each step, but
+								preserving the order of the steps.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Compiler</h1>
+					<pre><code class="java">
+public abstract class CrossCompiler {
+
+	public final void crossCompile() {
+	
+		collectSource();
+	
+		compileToTarget();
+	
+	}
+	
+	//Template methods
+	
+	protected abstract void collectSource();
+	
+	protected abstract void compileToTarget();
+	
+	}
+
+	public class IPhoneCompiler extends CrossCompiler {
+
+	protected void collectSource() {
+	
+		//anything specific to this class
+	
+	}
+	
+	protected void compileToTarget() {
+	
+		//iphone specific compilation
+	
+	}
+	
+	}
+
+	public class AndroidCompiler extends CrossCompiler {
+
+	protected void collectSource() {
+	
+		//anything specific to this class
+	
+	}
+	
+	protected void compileToTarget() {
+	
+		//android specific compilation
+	
+	}
+	
+	}
+
+	public class Client {
+
+	public static void main(String[] args) {
+	
+		CrossCompiler iphone = new IPhoneCompiler();
+	
+		iphone.crossCompile();
+	
+		CrossCompiler android = new AndroidCompiler();
+	
+		android.crossCompile();
+	
+	}
+	
+	}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>State</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Allow an object to change it's behaviour when it's internal state changes.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Music Player</h1>
+					<pre><code class="java">
+private interface State {
+
+	public void pressPlay(MP3PlayerContext context);
+	
+}
+
+public class StandbyState implements State {
+
+	public void pressPlay(MP3PlayerContext context) {
+	
+		context.setState(new PlayingState());
+	
+	}
+	
+}
+	
+	public class PlayingState implements State {
+	
+	public void pressPlay(MP3PlayerContext context) {
+	
+		context.setState(new StandbyState());
+	
+	}
+	
+}
+
+public class MP3PlayerContext {
+
+	private State state;
+	
+	private MP3PlayerContext(State state) {
+	
+		this.state= state;
+	
+	}
+	
+	public void play() {
+	
+		state.pressPlay(this);
+	
+	}
+	
+	public void setState(State state) {
+	
+		this.state = state;
+	
+	}
+	
+	public State getState() {
+	
+		return state;
+	
+	}
+	
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Memento</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Capture an object's internal state without violating encapsulation, so that the object can be restored to the state later. 
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Article Editor</h1>
+					<pre><code class="java">
+public class Article 
+{
+	private long id;
+	private String title;
+	private String content;
+		
+	public Article(long id, String title) {
+		super();
+		this.id = id;
+		this.title = title;
+	}
+		
+	//Setters and getters
+		
+	public ArticleMemento createMemento() 
+	{
+		ArticleMemento m = new ArticleMemento(id, title, content);
+		return m;
+	}
+		
+	public void restore(ArticleMemento m) {
+		this.id = m.getId();
+		this.title = m.getTitle();
+		this.content = m.getContent();
+	}
+	
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", title=" + title + ", content=" + content + "]";
+	}
+}
+
+public final class ArticleMemento 
+{
+    private final long id;
+    private final String title;
+    private final String content;
+     
+    public ArticleMemento(long id, String title, String content) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+ 
+    public long getId() {
+        return id;
+    }
+ 
+    public String getTitle() {
+        return title;
+    }
+ 
+    public String getContent() {
+        return content;
+    }
+}
+
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+        Article article = new Article(1, "My Article");
+        article.setContent("ABC");      //original content
+        System.out.println(article);
+         
+        ArticleMemento memento = article.createMemento();   //created immutable memento
+         
+        article.setContent("123");      //changed content
+        System.out.println(article);
+         
+        article.restore(memento);       //UNDO change
+        System.out.println(article);    //original content
+    }
+}
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Visitor</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Represent an operation to be performed, so that new operations can be defined without changing the elements operated on.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Game Engine</h1>
+					<pre><code class="java">
+interface Visitable{
+	void accept(Visitor visitor);
+}
+
+interface Visitor{
+	void logGameStatistics(Chess chess);
+	void logGameStatistics(Checkers checkers);
+	void logGameStatistics(Ludo ludo);    
+}
+class GameVisitor implements Visitor{
+	public void logGameStatistics(Chess chess){
+		System.out.println("Logging Chess statistics: Game Completion duration, number of moves etc..");    
+	}
+	public void logGameStatistics(Checkers checkers){
+		System.out.println("Logging Checkers statistics: Game Completion duration, remaining coins of loser");    
+	}
+	public void logGameStatistics(Ludo ludo){
+		System.out.println("Logging Ludo statistics: Game Completion duration, remaining coins of loser");    
+	}
+}
+
+abstract class Game{
+	// Add game related attributes and methods here
+	public Game(){
+
+	}
+	public void getNextMove(){};
+	public void makeNextMove(){}
+	public abstract String getName();
+}
+class Chess extends Game implements Visitable{
+	public String getName(){
+		return Chess.class.getName();
+	}
+	public void accept(Visitor visitor){
+		visitor.logGameStatistics(this);
+	}
+}
+class Checkers extends Game implements Visitable{
+	public String getName(){
+		return Checkers.class.getName();
+	}
+	public void accept(Visitor visitor){
+		visitor.logGameStatistics(this);
+	}
+}
+class Ludo extends Game implements Visitable{
+	public String getName(){
+		return Ludo.class.getName();
+	}
+	public void accept(Visitor visitor){
+		visitor.logGameStatistics(this);
+	}
+}
+
+public class VisitorPattern{
+	public static void main(String args[]){
+		Visitor visitor = new GameVisitor();
+		Visitable games[] = { new Chess(),new Checkers(), new Ludo()};
+		for (Visitable v : games){
+			v.accept(visitor);
+		}
+	}
+}
+					</code></pre>
+				</div>
+			</section>
+			
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Command</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Encapsulate a request as an object allowing clients with different requests to be passed as parameters.							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">File Util</h1>
+					<pre><code class="java">
+
+public interface FileSystemReceiver {
+
+	void openFile();
+	void writeFile();
+	void closeFile();
+}
+
+
+public class UnixFileSystemReceiver implements FileSystemReceiver {
+
+	@Override
+	public void openFile() {
+		System.out.println("Opening file in unix OS");
+	}
+
+	@Override
+	public void writeFile() {
+		System.out.println("Writing file in unix OS");
+	}
+
+	@Override
+	public void closeFile() {
+		System.out.println("Closing file in unix OS");
+	}
+
+}
+
+
+public class WindowsFileSystemReceiver implements FileSystemReceiver {
+
+	@Override
+	public void openFile() {
+		System.out.println("Opening file in Windows OS");
+		
+	}
+
+	@Override
+	public void writeFile() {
+		System.out.println("Writing file in Windows OS");
+	}
+
+	@Override
+	public void closeFile() {
+		System.out.println("Closing file in Windows OS");
+	}
+
+}
+
+
+public interface Command {
+
+	void execute();
+}
+
+
+
+public class OpenFileCommand implements Command {
+
+	private FileSystemReceiver fileSystem;
+	
+	public OpenFileCommand(FileSystemReceiver fs){
+		this.fileSystem=fs;
+	}
+	@Override
+	public void execute() {
+		//open command is forwarding request to openFile method
+		this.fileSystem.openFile();
+	}
+
+}
+
+
+
+public class CloseFileCommand implements Command {
+
+	private FileSystemReceiver fileSystem;
+	
+	public CloseFileCommand(FileSystemReceiver fs){
+		this.fileSystem=fs;
+	}
+	@Override
+	public void execute() {
+		this.fileSystem.closeFile();
+	}
+
+}
+
+
+
+public class WriteFileCommand implements Command {
+
+	private FileSystemReceiver fileSystem;
+	
+	public WriteFileCommand(FileSystemReceiver fs){
+		this.fileSystem=fs;
+	}
+	@Override
+	public void execute() {
+		this.fileSystem.writeFile();
+	}
+
+}
+
+
+
+public class FileInvoker {
+
+	public Command command;
+	
+	public FileInvoker(Command c){
+		this.command=c;
+	}
+	
+	public void execute(){
+		this.command.execute();
+	}
+}
+
+
+
+public class FileSystemReceiverUtil {
+	
+	public static FileSystemReceiver getUnderlyingFileSystem(){
+			String osName = System.getProperty("os.name");
+			System.out.println("Underlying OS is:"+osName);
+			if(osName.contains("Windows")){
+				return new WindowsFileSystemReceiver();
+			}else{
+				return new UnixFileSystemReceiver();
+			}
+	}
+	
+}
+
+
+
+public class FileSystemClient {
+
+	public static void main(String[] args) {
+		//Creating the receiver object
+		FileSystemReceiver fs = FileSystemReceiverUtil.getUnderlyingFileSystem();
+		
+		//creating command and associating with receiver
+		OpenFileCommand openFileCommand = new OpenFileCommand(fs);
+		
+		//Creating invoker and associating with Command
+		FileInvoker file = new FileInvoker(openFileCommand);
+		
+		//perform action on invoker object
+		file.execute();
+		
+		WriteFileCommand writeFileCommand = new WriteFileCommand(fs);
+		file = new FileInvoker(writeFileCommand);
+		file.execute();
+		
+		CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
+		file = new FileInvoker(closeFileCommand);
+		file.execute();
+	}
+
+}
+						
+					</code></pre>
+				</div>
+			</section>
+
+			<section>
+				<div class="wrap">
+					<div class="grid sm">
+						<div class="column bg-gray-400 text-teal-800">
+							<h1>Interpreter</h1>
+						</div>
+						<div class="column bg-teal-800 text-teal-100">
+							<p class="text-4xl">
+								Given a language defined by a grammar along with an interpreter that uses the grammar to interpret the language.						</div>
+					</div>
+				</div>
+			</section>
+
+
+			<section class="slide">
+				<div class="wrap bg-teal-800">
+					<h1 class="text-teal-100">Translator</h1>
+					<pre><code class="java">
+
+public class InterpreterContext {
+
+	public String getBinaryFormat(int i){
+		return Integer.toBinaryString(i);
+	}
+	
+	public String getHexadecimalFormat(int i){
+		return Integer.toHexString(i);
+	}
+}
+
+						
+public interface Expression {
+
+	String interpret(InterpreterContext ic);
+}
+
+
+public interface Expression {
+
+	String interpret(InterpreterContext ic);
+}
+
+
+public class IntToBinaryExpression implements Expression {
+
+	private int i;
+	
+	public IntToBinaryExpression(int c){
+		this.i=c;
+	}
+	@Override
+	public String interpret(InterpreterContext ic) {
+		return ic.getBinaryFormat(this.i);
+	}
+
+}
+
+
+public class IntToHexExpression implements Expression {
+
+	private int i;
+	
+	public IntToHexExpression(int c){
+		this.i=c;
+	}
+	
+	@Override
+	public String interpret(InterpreterContext ic) {
+		return ic.getHexadecimalFormat(i);
+	}
+
+}
+
+
+public class InterpreterClient {
+
+	public InterpreterContext ic;
+	
+	public InterpreterClient(InterpreterContext i){
+		this.ic=i;
+	}
+	
+	public String interpret(String str){
+		Expression exp = null;
+		//create rules for expressions
+		if(str.contains("Hexadecimal")){
+			exp=new IntToHexExpression(Integer.parseInt(str.substring(0,str.indexOf(" "))));
+		}else if(str.contains("Binary")){
+			exp=new IntToBinaryExpression(Integer.parseInt(str.substring(0,str.indexOf(" "))));
+		}else return str;
+		
+		return exp.interpret(ic);
+	}
+	
+	public static void main(String args[]){
+		String str1 = "28 in Binary";
+		String str2 = "28 in Hexadecimal";
+		
+		InterpreterClient ec = new InterpreterClient(new InterpreterContext());
+		System.out.println(str1+"= "+ec.interpret(str1));
+		System.out.println(str2+"= "+ec.interpret(str2));
+
+	}
+}
+
+					</code></pre>
+				</div>
+			</section>
+		</article>
+	</main>
+	<script src="./src/scripts/index.js"></script>
+</body>
+
+</html>
