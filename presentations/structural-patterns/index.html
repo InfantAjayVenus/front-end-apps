@@ -1,76 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./src/styles/main.css">
-	<title>Structural Pattern</title>
-</head>
-
-<body>
-	<main role="main">
-		<article id="webslides" class="bg-gray-200">
-			<!-- Slide 1 -->
-			<section class="slide  ">
-				<div class="grid sm">
-					<div class="column bg-yellow-900 text-yellow-100">
-						<h1>Structural Patterns</h1>
-					</div>
-					<div class="column text-yellow-900 text-semibold bg-yellow-100">
-						<h2 class="text-4xl">
-							Structural Design Patterns are Design Patterns that ease the design by identifying a simple way to realize relationships between entities. 
-						</h2>
-			</section>
-
-			<section class="slide bg-gray-200">
-				<div class="wrap">
-					<h1 class="slide-top text-yellow-900">List of Structural Patterns</h1>
-					<ul class="flexblock specs">
-						<li>
-							<h2>Decorator</h2>
-						</li>
-						<li>
-							<h2>Flyweight</h2>
-						</li>
-						<li>
-							<h2>Facade</h2>
-						</li>
-						<li>
-							<h2>Adapter</h2>
-						</li>
-						<li>
-							<h2>Bridge</h2>
-						</li>
-						<li>
-							<h2>Proxy</h2>
-						</li>
-						<li>
-							<h2>Composite</h2>
-						</li>
-					</ul>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Decorator</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Adding additional functionality to an object dynamically, thus making any object extendable. 
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Currency Exchange</h1>
-					<pre><code class="java">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/presentations/main.6e55933c.css"><title>Structural Pattern</title></head><body> <main role="main"> <article id="webslides" class="bg-gray-200">  <section class="slide"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Structural Patterns</h1> </div> <div class="column text-yellow-900 text-semibold bg-yellow-100"> <h2 class="text-4xl"> Structural Design Patterns are Design Patterns that ease the design by identifying a simple way to realize relationships between entities. </h2> </div></div></section> <section class="slide bg-gray-200"> <div class="wrap"> <h1 class="slide-top text-yellow-900">List of Structural Patterns</h1> <ul class="flexblock specs"> <li> <h2>Decorator</h2> </li> <li> <h2>Flyweight</h2> </li> <li> <h2>Facade</h2> </li> <li> <h2>Adapter</h2> </li> <li> <h2>Bridge</h2> </li> <li> <h2>Proxy</h2> </li> <li> <h2>Composite</h2> </li> </ul> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Decorator</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Adding additional functionality to an object dynamically, thus making any object extendable. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Currency Exchange</h1> <pre><code class="java">
 public abstract class Currency {
 	String description = "Unknown currency";
 	
@@ -190,29 +118,7 @@ public class CurrencyCheck {
 		System.out.println(curr3.getDescription() +" dollar. "+curr3.cost(4.0));
 	}
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Flyweight</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Create light weight objects in large number by sharing data among the objects. 
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Paint Tool</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Flyweight</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Create light weight objects in large number by sharing data among the objects. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Paint Tool</h1> <pre><code class="java">
 public interface Pen {   
 	public void setColor(String color);
 	public void draw(String content); 
@@ -269,7 +175,7 @@ public class MediumPen implements Pen {
 
 public class PenFactory
 {
-    private static final HashMap<String, Pen> pensMap = new HashMap<>();
+    private static final HashMap<String, Pen=""> pensMap = new HashMap<>();
  
     public static Pen getThickPen(String color) 
     {
@@ -342,29 +248,7 @@ public class PaintBrushClient
         System.out.println(blueThinPen.hashCode());
     }
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Facade</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Define a unified interface for a set of related interfaces, making them easy to use. 
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Report Editor</h1>
-					<pre><code class="java">
+					</String,></code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Facade</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Define a unified interface for a set of related interfaces, making them easy to use. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Report Editor</h1> <pre><code class="java">
 public class Report {
 
 	private ReportHeader header;
@@ -470,29 +354,7 @@ public class Main
         reportGeneratorFacade.generateReport(ReportType.PDF, null, null);
     }
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Adapter</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Provide a way to convert the interface of a class to a different interface required by the client. 
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Signal Decoder</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Adapter</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Provide a way to convert the interface of a class to a different interface required by the client. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Signal Decoder</h1> <pre><code class="java">
 public interface AnalogSignal {
 	float[] getAnalog();
 
@@ -617,29 +479,7 @@ public class AnalogToDigitAdapter implements DigitSignal {
 		return (byte) (f >= threshold ? 1 : 0);
 	}
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Bridge</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Decouple an abstraction from it's interface allowing the two to vary independently.  
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Stack DS</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Bridge</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Decouple an abstraction from it's interface allowing the two to vary independently. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Stack DS</h1> <pre><code class="java">
 class Node {
 	public int value;
 	public Node prev, next;
@@ -785,29 +625,7 @@ public class BridgeDisc {
 	}
 }
 						
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Proxy</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Provide a placeholder for another object to control access to it. 
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Objects</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Proxy</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Provide a placeholder for another object to control access to it. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Objects</h1> <pre><code class="java">
 public interface RealObject{
 	public void doSomething();
 }
@@ -839,30 +657,7 @@ public class Client {
         proxy.doSomething();
     }
 }
-					</code></pre>
-				</div>
-			</section>
-
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-yellow-900 text-yellow-100">
-							<h1>Composite</h1>
-						</div>
-						<div class="column bg-yellow-100 text-yellow-900">
-							<p class="text-4xl">
-								Compose a set of objects in an heirarchy allowing clients to treat individual objects and collection of objects equally. 
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-yellow-900">
-					<h1 class="text-yellow-100">Account Management</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-yellow-900 text-yellow-100"> <h1>Composite</h1> </div> <div class="column bg-yellow-100 text-yellow-900"> <p class="text-4xl"> Compose a set of objects in an heirarchy allowing clients to treat individual objects and collection of objects equally. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-yellow-900"> <h1 class="text-yellow-100">Account Management</h1> <pre><code class="java">
 public abstract class Component 
 {
 	AccountStatement accStatement;
@@ -989,13 +784,5 @@ public class Client
         //System.out.println("Merged Statement : " + mergedStatement);
     }
 }
-					</code></pre>
-				</div>
-			</section>
-			
-		</article>
-	</main>
-	<script src="./src/scripts/index.js"></script>
-</body>
-
-</html>
+					</Component></code></pre> </div> </section> </article> </main> <script src="/presentations/scripts.f6dc1f06.js"></script>
+</body></html>

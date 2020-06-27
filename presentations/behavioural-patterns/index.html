@@ -1,90 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./src/styles/main.css">
-	<title>Behavioural Pattern</title>
-</head>
-
-<body>
-	<main role="main">
-		<article id="webslides">
-			<section class="slide  ">
-				<div class="grid sm">
-					<div class="column bg-teal-800 text-teal-100">
-						<h1>Behavioural Patterns</h1>
-					</div>
-					<div class="column text-teal-800 text-semibold bg-gray-400">
-						<h2 class="text-4xl">
-							Behavioral patterns handle how objects interact. That interaction involves communication
-							with one another, dependencies on one another, isolation from each other to be flexible,
-							maintainable and testable.
-						</h2>
-			</section>
-
-			<section class="slide bg-teal-100">
-				<div class="wrap">
-					<h1 class="slide-top text-teal-800">List of Behavioural Patterns</h1>
-					<ul class="flexblock specs">
-						<li>
-							<h2>Observer</h2>
-						</li>
-						<li>
-							<h2>Iterator</h2>
-						</li>
-						<li>
-							<h2>Chain of Responsibility</h2>
-						</li>
-						<li>
-							<h2>Strategy</h2>
-						</li>
-						<li>
-							<h2>Mediator</h2>
-						</li>
-						<li>
-							<h2>Template Method</h2>
-						</li>
-						<li>
-							<h2>State</h2>
-						</li>
-						<li>
-							<h2>Memento</h2>
-						</li>
-						<li>
-							<h2>Visitor</h2>
-						</li>
-						<li>
-							<h2>Command</h2>
-						</li>
-						<li>
-							<h2>Interpreter</h2>
-						</li>
-					</ul>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Observer</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Define a one-to-many relationship between objects, so that when one object changes, it
-								notifies to all it's dependencies.
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Implementation</h1>
-					<pre><code class="java">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/presentations/main.e1747c27.css"><title>Behavioural Pattern</title></head><body> <main role="main"> <article id="webslides"> <section class="slide"> <div class="grid sm"> <div class="column bg-teal-800 text-teal-100"> <h1>Behavioural Patterns</h1> </div> <div class="column text-teal-800 text-semibold bg-gray-400"> <h2 class="text-4xl"> Behavioral patterns handle how objects interact. That interaction involves communication with one another, dependencies on one another, isolation from each other to be flexible, maintainable and testable. </h2> </div></div></section> <section class="slide bg-teal-100"> <div class="wrap"> <h1 class="slide-top text-teal-800">List of Behavioural Patterns</h1> <ul class="flexblock specs"> <li> <h2>Observer</h2> </li> <li> <h2>Iterator</h2> </li> <li> <h2>Chain of Responsibility</h2> </li> <li> <h2>Strategy</h2> </li> <li> <h2>Mediator</h2> </li> <li> <h2>Template Method</h2> </li> <li> <h2>State</h2> </li> <li> <h2>Memento</h2> </li> <li> <h2>Visitor</h2> </li> <li> <h2>Command</h2> </li> <li> <h2>Interpreter</h2> </li> </ul> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Observer</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Define a one-to-many relationship between objects, so that when one object changes, it notifies to all it's dependencies. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Implementation</h1> <pre><code class="java">
 public interface Subject 
 {
 	public void attach(Observer o);
@@ -161,29 +75,7 @@ public class Main
 		p.notifyUpdate(new Message("Second Message")); //s2 and s3 will receive the update
 	}
 }	
-					</code></pre>
-				</div>
-			</section>
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Iterator</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Provide an interface to access the elements of an aggregate object sequentially, without
-								exposing the object's implementation.
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Topic List Manager</h1>
-					<pre><code class="java">
+					</Observer></code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Iterator</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Provide an interface to access the elements of an aggregate object sequentially, without exposing the object's implementation. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Topic List Manager</h1> <pre><code class="java">
 public class Topic 
 {
 	private String name;
@@ -288,29 +180,7 @@ public class Main
         }
     }
 }
-					</code></pre>
-				</div>
-			</section>
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Chain of Responsibility</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Chain the recieving objects and pass the request along the chain until an object handles
-								it.
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Implementation Sample</h1>
-					<pre><code class="java">
+					</Topic></Topic></Topic></Topic></E></E></Topic></E></code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Chain of Responsibility</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Chain the recieving objects and pass the request along the chain until an object handles it. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Implementation Sample</h1> <pre><code class="java">
 public class Request {	
 	private int m_value;
 	private String m_description;
@@ -413,29 +283,7 @@ public class Main
 		h1.handleRequest(new Request("Negative Value ", -5));	    
 	}
 }
-					</code></pre>
-				</div>
-			</section>
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Strategy</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Create a family of algorithms and make them interchangable by encapsulating them.
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Payment Gateways</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Strategy</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Create a family of algorithms and make them interchangable by encapsulating them. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Payment Gateways</h1> <pre><code class="java">
 public interface PaymentStrategy {
 
 	public void pay(int amount);
@@ -496,29 +344,7 @@ public class ShoppingCartTest {
 	}
 
 }						
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Mediator</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Define an Object that encapsulates a set of object thus keeping them from referring to
-								each other explicitly and vary the interaction independently. </p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Chat Room App</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Mediator</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Define an Object that encapsulates a set of object thus keeping them from referring to each other explicitly and vary the interaction independently. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Chat Room App</h1> <pre><code class="java">
 public interface IChatRoom 
 {
 	public void sendMessage(String msg, String userId);
@@ -528,7 +354,7 @@ public interface IChatRoom
 
 public class ChatRoom implements IChatRoom {
 
-	private Map<String, User> usersMap = new HashMap<>();
+	private Map<String, User=""> usersMap = new HashMap<>();
 	
 	@Override
 	public void sendMessage(String msg, String userId) 
@@ -611,30 +437,7 @@ public class Main
         user2.send("Hey buddy", "1");
     }
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Template Method</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Define the steps of an algorithm/operation and allow subclasses define each step, but
-								preserving the order of the steps.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Compiler</h1>
-					<pre><code class="java">
+					</String,></code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Template Method</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Define the steps of an algorithm/operation and allow subclasses define each step, but preserving the order of the steps. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Compiler</h1> <pre><code class="java">
 public abstract class CrossCompiler {
 
 	public final void crossCompile() {
@@ -700,29 +503,7 @@ public abstract class CrossCompiler {
 	}
 	
 	}
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>State</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Allow an object to change it's behaviour when it's internal state changes.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Music Player</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>State</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Allow an object to change it's behaviour when it's internal state changes. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Music Player</h1> <pre><code class="java">
 private interface State {
 
 	public void pressPlay(MP3PlayerContext context);
@@ -778,29 +559,7 @@ public class MP3PlayerContext {
 	}
 	
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Memento</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Capture an object's internal state without violating encapsulation, so that the object can be restored to the state later. 
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Article Editor</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Memento</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Capture an object's internal state without violating encapsulation, so that the object can be restored to the state later. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Article Editor</h1> <pre><code class="java">
 public class Article 
 {
 	private long id;
@@ -876,29 +635,7 @@ public class Main
         System.out.println(article);    //original content
     }
 }
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Visitor</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Represent an operation to be performed, so that new operations can be defined without changing the elements operated on.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Game Engine</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Visitor</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Represent an operation to be performed, so that new operations can be defined without changing the elements operated on. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Game Engine</h1> <pre><code class="java">
 interface Visitable{
 	void accept(Visitor visitor);
 }
@@ -963,29 +700,7 @@ public class VisitorPattern{
 		}
 	}
 }
-					</code></pre>
-				</div>
-			</section>
-			
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Command</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Encapsulate a request as an object allowing clients with different requests to be passed as parameters.							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">File Util</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Command</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Encapsulate a request as an object allowing clients with different requests to be passed as parameters. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">File Util</h1> <pre><code class="java">
 
 public interface FileSystemReceiver {
 
@@ -1149,28 +864,7 @@ public class FileSystemClient {
 
 }
 						
-					</code></pre>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-teal-800">
-							<h1>Interpreter</h1>
-						</div>
-						<div class="column bg-teal-800 text-teal-100">
-							<p class="text-4xl">
-								Given a language defined by a grammar along with an interpreter that uses the grammar to interpret the language.						</div>
-					</div>
-				</div>
-			</section>
-
-
-			<section class="slide">
-				<div class="wrap bg-teal-800">
-					<h1 class="text-teal-100">Translator</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-teal-800"> <h1>Interpreter</h1> </div> <div class="column bg-teal-800 text-teal-100"> <p class="text-4xl"> Given a language defined by a grammar along with an interpreter that uses the grammar to interpret the language. </p></div> </div> </div> </section> <section class="slide"> <div class="wrap bg-teal-800"> <h1 class="text-teal-100">Translator</h1> <pre><code class="java">
 
 public class InterpreterContext {
 
@@ -1258,12 +952,5 @@ public class InterpreterClient {
 	}
 }
 
-					</code></pre>
-				</div>
-			</section>
-		</article>
-	</main>
-	<script src="./src/scripts/index.js"></script>
-</body>
-
-</html>
+					</code></pre> </div> </section> </article> </main> <script src="/presentations/scripts.5404750e.js"></script>
+</body></html>

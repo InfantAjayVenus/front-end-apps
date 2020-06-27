@@ -1,73 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./src/styles/main.css">
-	<title>Creational Pattern</title>
-</head>
-
-<body>
-	<main role="main">
-		<article id="webslides">
-			<!-- Slide 1 -->
-			<section class="slide  ">
-				<div class="grid sm">
-					<div class="column bg-indigo-800 text-indigo-100">
-						<h1>Creational Patterns</h1>
-					</div>
-					<div class="column text-indigo-800 text-semibold bg-gray-400">
-						<h2 class="text-4xl">
-							Creational patterns handle how objects are created. The purpose of creational patterns is to isolate a
-							system
-							from having any knowledge of how objects are created. They enforce encapsulation and abstraction.
-						</h2>
-			</section>
-
-			<section class="slide bg-indigo-100">
-				<div class="wrap">
-					<h1 class="slide-top text-indigo-800">List of Creation Patterns</h1>
-					<ul class="flexblock specs">
-						<li>
-							<h2>Singleton</h2>
-						</li>
-						<li>
-							<h2>Factory Method</h2>
-						</li>
-						<li>
-							<h2>Abstract Factory</h2>
-						</li>
-						<li>
-							<h2>Prototype</h2>
-						</li>
-						<li>
-							<h2>Builder</h2>
-						</li>
-					</ul>
-				</div>
-			</section>
-
-			<section>
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-indigo-800">
-							<h1>Singleton</h1>
-						</div>
-						<div class="column bg-indigo-800 text-indigo-100">
-							<p class="text-4xl">
-								This pattern restricts the creation of object for a class to a count of one. It is very simple and easy
-								to implement.
-							</p>
-						</div>
-					</div>
-
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-indigo-800">
-					<h1 class="text-indigo-100">Eager Initialization</h1>
-					<pre><code class="java">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/presentations/main.6ef3c545.css"><title>Creational Pattern</title></head><body> <main role="main"> <article id="webslides">  <section class="slide"> <div class="grid sm"> <div class="column bg-indigo-800 text-indigo-100"> <h1>Creational Patterns</h1> </div> <div class="column text-indigo-800 text-semibold bg-gray-400"> <h2 class="text-4xl"> Creational patterns handle how objects are created. The purpose of creational patterns is to isolate a system from having any knowledge of how objects are created. They enforce encapsulation and abstraction. </h2> </div></div></section> <section class="slide bg-indigo-100"> <div class="wrap"> <h1 class="slide-top text-indigo-800">List of Creation Patterns</h1> <ul class="flexblock specs"> <li> <h2>Singleton</h2> </li> <li> <h2>Factory Method</h2> </li> <li> <h2>Abstract Factory</h2> </li> <li> <h2>Prototype</h2> </li> <li> <h2>Builder</h2> </li> </ul> </div> </section> <section> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-indigo-800"> <h1>Singleton</h1> </div> <div class="column bg-indigo-800 text-indigo-100"> <p class="text-4xl"> This pattern restricts the creation of object for a class to a count of one. It is very simple and easy to implement. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-indigo-800"> <h1 class="text-indigo-100">Eager Initialization</h1> <pre><code class="java">
 public class DBConnection {    
 	//create the only private instance of the class
 	private static DBConnection instance = new DBConnection();    
@@ -83,13 +14,7 @@ public class DBConnection {
 		System.out.println("CRUD action execute successfully");
 	}
 }
-					</code></pre>
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-indigo-800">
-					<h1 class="text-indigo-100">Lazy Initialization</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section class="slide"> <div class="wrap bg-indigo-800"> <h1 class="text-indigo-100">Lazy Initialization</h1> <pre><code class="java">
 public class LazyDBConnection {
 
 	//prevents the class from getting instantiated
@@ -108,28 +33,7 @@ public class LazyDBConnection {
 		System.out.println("CRUD action execute successfully");
 	}
 }
-					</code></pre>
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap">
-					<div class="grid sm">
-						<div class="column bg-gray-400 text-indigo-800">
-							<h1>Factory Method</h1>
-						</div>
-						<div class="column bg-indigo-800 text-indigo-100 content-center text-left">
-							<p class="text-4xl">
-								This pattern uses factory methods to deal with the problem of creating objects without specifying the
-								exact class of the object to be created.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section class="slide">
-				<div class="wrap bg-indigo-800 ">
-					<h1 class="text-indigo-100">Image Decoder</h1>
-					<pre><code class="java">
+					</code></pre> </div> </section> <section class="slide"> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-indigo-800"> <h1>Factory Method</h1> </div> <div class="column bg-indigo-800 text-indigo-100 content-center text-left"> <p class="text-4xl"> This pattern uses factory methods to deal with the problem of creating objects without specifying the exact class of the object to be created. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-indigo-800"> <h1 class="text-indigo-100">Image Decoder</h1> <pre><code class="java">
 interface ImageReader {
     DecodedImage getDecodeImage();
 }
@@ -177,27 +81,7 @@ public class FactoryMethodDemo {
         System.out.println(decodedImage);
     }
 }
-					</code></pre>
-				</div>
-			</section>
-			<section class="slide">
-			    <div class="wrap">
-				<div class="grid sm">
-				    <div class="column text-indigo-800 bg-gray-400">
-					<h1>Abstract Factory Method</h1>
-				    </div>
-				    <div class="column bg-indigo-800 text-indigo-100">
-					<p class="text-4xl">
-					    This Pattern provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
-					</p>
-				    </div>
-				</div>
-			    </div>
-			</section>
-			<section class="slide">
-			    <div class="wrap bg-indigo-800">
-				<h1 class="text-indigo-100">GUI Builder</h1>
-				<pre>
+					</code></pre> </div> </section> <section class="slide"> <div class="wrap"> <div class="grid sm"> <div class="column text-indigo-800 bg-gray-400"> <h1>Abstract Factory Method</h1> </div> <div class="column bg-indigo-800 text-indigo-100"> <p class="text-4xl"> This Pattern provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-indigo-800"> <h1 class="text-indigo-100">GUI Builder</h1> <pre>
 				    <code class="java">
 public class Main{
 
@@ -295,27 +179,7 @@ public class MacOSXWindow implements Window{
 	
 }
 					</code>
-				</pre>
-			    </div>
-			</section>
-			<section class="slide">
-			    <div class="wrap">
-				<div class="grid sm">
-				    <div class="column bg-gray-400 text-indigo-800">
-					<h1>Prototype</h1>
-				    </div>
-				    <div class="column bg-indigo-800 text-indigo-100">
-					<p class="text-4xl">
-					    This pattern is used when the creation of new objects is done by cloning an existing instance.
-					</p>
-				    </div>
-				</div>
-			    </div>
-			</section>
-			<section class="slide">
-			    <div class="wrap bg-indigo-800">
-				<h1 class="text-indigo-100">Employee Record</h1>
-				<pre>
+				</pre> </div> </section> <section class="slide"> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400 text-indigo-800"> <h1>Prototype</h1> </div> <div class="column bg-indigo-800 text-indigo-100"> <p class="text-4xl"> This pattern is used when the creation of new objects is done by cloning an existing instance. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-indigo-800"> <h1 class="text-indigo-100">Employee Record</h1> <pre>
 				    <code class="java">
 
 public class Employees implements Cloneable{
@@ -372,29 +236,8 @@ public class PrototypePatternTest {
 	}
 
 }
-				    </code>
-				</pre>
-			    </div>
-			</section>
-			<section class="slide">
-			    <div class="wrap">
-				<div class="grid sm">
-				    <div class="column bg-gray-400">
-					<h1 class="text-indigo-800">Builder</h1>
-				    </div>
-				    <div class="column bg-indigo-800 text-indigo-100">
-					<p class="text-4xl">
-					    This pattern is used to separate the construction of a complex object from its representation.
-					</p>
-				    </div>
-				</div>
-			    </div>
-			</section>
-			
-			<section class="slide">
-			    <div class="wrap bg-indigo-800">
-				<h1 class="text-indigo-100">Task Management App</h1>
-				<pre>
+				    </String></String></String></String></String></String></String></String></code>
+				</pre> </div> </section> <section class="slide"> <div class="wrap"> <div class="grid sm"> <div class="column bg-gray-400"> <h1 class="text-indigo-800">Builder</h1> </div> <div class="column bg-indigo-800 text-indigo-100"> <p class="text-4xl"> This pattern is used to separate the construction of a complex object from its representation. </p> </div> </div> </div> </section> <section class="slide"> <div class="wrap bg-indigo-800"> <h1 class="text-indigo-100">Task Management App</h1> <pre>
 				    <code class="java">
 // Representation of Task
 public class Task {
@@ -506,13 +349,5 @@ public class MainTest {
 
 }
 					</code>
-				</pre>
-			    </div>
-			</section>
-			
-		</article>
-	</main>
-	<script src="./src/scripts/index.js"></script>
-</body>
-
-</html>
+				</pre> </div> </section> </article> </main> <script src="/presentations/scripts.be472cd4.js"></script>
+</body></html>
