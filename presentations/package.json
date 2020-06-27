@@ -8,7 +8,7 @@
     "build": "parcel build ./**/*.html --public-url /presentations",
     "clean": "rm -rf dist .cache",
     "refresh": "npm run clean && npm start",
-    "publish":"gh-pages -d dist"
+    "publish": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
